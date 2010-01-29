@@ -1,0 +1,24 @@
+You can style the player using following classes:
+
+div.cmsplayer: wrapper for the whole player (without the playlist)
+	ul.controls: list of control buttons
+		li.play: play button
+		li.pause: pause button
+		li.stop: stop button
+		li.volume-min: button to mute the player
+		li.volume-max: button to set maximum volume
+		li.next: button to play next song
+		li.prev: button to play previous song
+	div.playtime: the time the song has played so far
+	div.totaltime: length of the song
+	div.progress: progress bar wrapper
+		div.loadbar: the progressbar for the loading process
+			div.playbar: the progressbar for the playing of the song
+	div.volumebar: volume bar wrapper
+		div.volumebarvalue: value of the volume bar
+div.cmsplaylsit: wrapper for the playlsit
+	ul: list of songs
+		li.song: a song
+			span.songname: name of the song
+			a.artist or span.artist: the artist name
+			a.credits or span.credits: the credits
