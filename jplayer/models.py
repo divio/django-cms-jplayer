@@ -1,13 +1,9 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
+from django.utils.safestring import mark_safe
 from django.utils.simplejson import dumps
 from django.utils.translation import ugettext_lazy as _
-from django.utils.safestring import mark_safe
-
-def safe_json(func):
-    def decorated(*args, **kwargs):
-        return mark_safe(dumps(func(*args, **kwargs)))
-    return decorated
+from jplayer.utils import safe_json
 
 
 class JPlayer(models.Model):

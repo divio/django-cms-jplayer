@@ -40,7 +40,7 @@ function cmsplayer_ready (element, playlist, autoplay, playerid)
     function displayPlayList() {
         for (i=0; i < playlist.length; i++) {
             song = playlist[i];
-            display = "<li class='song' id='playlist_item_"+playerid+"_'"+i+"'><span class='songname' id='cmsplay_song_'"+i+"'>"+song.title+'</span> - ';
+            display = "<li class='song' id='playlist_item_"+playerid+"_"+i+"'><span class='songname' id='cmsplay_song_"+i+"'>"+song.title+'</span> - ';
             if (song.artist_url)
             {
                 display+=" <a class='artist' href='"+song.artist_url+"'>"+song.artist_name+"</a>";

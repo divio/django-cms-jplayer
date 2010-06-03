@@ -28,18 +28,16 @@
 </div> 
 <script type="text/javascript">
 $(document).ready(function(){
-    $("head").append('<scr' + 'ipt type="text/javascript" src="{{ MEDIA_URL }}js/jquery.jplayer.js"></scr' + 'ipt>');
     $("head").append('<scr' + 'ipt type="text/javascript" src="{{ MEDIA_URL }}js/cmsplayer.js"></scr' + 'ipt>');
 	$('#jquery_jplayer_{{ player.id }}').jPlayer(
 	    {
 		    ready:function(){
-		    	/*$.cmsplayer_ready(
-				 *   $(this), 
-				 *   {{ player.get_json_playlist }},
-				 *   {{ player.get_json_autoplay }},
-				 *   {{ player.id }}
-				 );*/
-				 alert('hello');
+		    	.cmsplayer_ready(
+				   $(this), 
+				   {{ player.get_json_playlist }},
+				   {{ player.get_json_autoplay }},
+				   {{ player.id }}
+				 );
 			},
 			swfPath: {{ player.get_json_swf_path }},
 			oggSupport: {{ player.get_json_ogg_support }}
