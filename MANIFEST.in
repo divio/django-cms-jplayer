@@ -1,0 +1,4 @@
+include LICENSE
+include README
+recursive-include jplayer/templates *
+recursive-include jplayer/media *

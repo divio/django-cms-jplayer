@@ -13,8 +13,7 @@ setup(
     package_data={
         'jplayer': [
             'templates/jplayer/*.html',
-            'media/js/*.js',
-            'media/swf/*.swf',
+            'media/jplayer/js/*.js',
         ],
     },
     zip_safe=False,
