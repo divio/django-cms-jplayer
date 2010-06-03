@@ -1,29 +1,28 @@
 function cmsplayer_ready (element, playlist, autoplay, playerid)
 {
     var playItem = 0;
-    
-    element.jPlayerId("play", "player_play_"+playerid)
-    .jPlayerId("pause", "player_pause_"+playerid)
-    .jPlayerId("stop", "player_stop_"+playerid)
-    .jPlayerId("loadBar", "player_progress_load_bar_"+playerid)
-    .jPlayerId("playBar", "player_progress_play_bar_"+playerid)
-    .jPlayerId("volumeMin", "player_volume_min_"+playerid)
-    .jPlayerId("volumeMax", "player_volume_max_"+playerid)
-    .jPlayerId("volumeBar", "player_volume_bar_"+playerid)
-    .jPlayerId("volumeBarValue", "player_volume_bar_value_"+playerid)
-    .onProgressChange( function(loadPercent, playedPercentRelative, playedPercentAbsolute, playedTime, totalTime) {
+    var playtime = $("#play_time_"+playerid);
+    var totaltime =  $("#total_time_"+playerid);
+    element.jPlayer("cssId", "play", "player_play_"+playerid)
+    .jPlayer("cssId", "pause", "player_pause_"+playerid)
+    .jPlayer("cssId", "stop", "player_stop_"+playerid)
+    .jPlayer("cssId", "loadBar", "player_progress_load_bar_"+playerid)
+    .jPlayer("cssId", "playBar", "player_progress_play_bar_"+playerid)
+    .jPlayer("cssId", "volumeMin", "player_volume_min_"+playerid)
+    .jPlayer("cssId", "volumeMax", "player_volume_max_"+playerid)
+    .jPlayer("cssId", "volumeBar", "player_volume_bar_"+playerid)
+    .jPlayer("cssId", "volumeBarValue", "player_volume_bar_value_"+playerid)
+    .jPlayer("onProgressChange", function(loadPercent, playedPercentRelative, playedPercentAbsolute, playedTime, totalTime) {
         var myPlayedTime = new Date(playedTime);
         var ptMin = (myPlayedTime.getUTCMinutes() < 10) ? "0" + myPlayedTime.getUTCMinutes() : myPlayedTime.getUTCMinutes();
         var ptSec = (myPlayedTime.getUTCSeconds() < 10) ? "0" + myPlayedTime.getUTCSeconds() : myPlayedTime.getUTCSeconds();
-        $("#play_time_"+playerid).text(ptMin+":"+ptSec);
+        playtime.text(ptMin+":"+ptSec);
     
         var myTotalTime = new Date(totalTime);
         var ttMin = (myTotalTime.getUTCMinutes() < 10) ? "0" + myTotalTime.getUTCMinutes() : myTotalTime.getUTCMinutes();
         var ttSec = (myTotalTime.getUTCSeconds() < 10) ? "0" + myTotalTime.getUTCSeconds() : myTotalTime.getUTCSeconds();
-        $("#total_time_"+playerid).text(ttMin+":"+ttSec);
-    });
-
-    element.onSoundComplete( function() {
+        totaltime.text(ttMin+":"+ttSec);
+    }).jPlayer("onSoundComplete", function() {
         playListNext();
     });
     
@@ -70,14 +69,9 @@ function cmsplayer_ready (element, playlist, autoplay, playerid)
                 function() {
                     $(this).removeClass("playlist_hover");
                 }
-            )
-            $('#cmsplay_song_'+playerid+'_'+i).click( function() {
+            ).click( function() {
                 var index = $(this).data("index");
-                if (playItem != index) {
-                    playListChange( index );
-                } else {
-                    $("#jquery_jplayer_"+playerid).play();
-                }
+                playListChange( index );
             });
         }
     }
@@ -96,17 +90,17 @@ function cmsplayer_ready (element, playlist, autoplay, playerid)
         playItem = index;
         if (playlist[playItem].ogg)
         {
-            $("#jquery_jplayer_"+playerid).setFile(playlist[playItem].mp3, myPlayList[playItem].ogg);
+            element.jPlayer("setFile", playlist[playItem].mp3, playlist[playItem].ogg);
         }
         else
         {
-            $("#jquery_jplayer_"+playerid).setFile(playlist[playItem].mp3);
+            element.jPlayer("setFile", playlist[playItem].mp3);
         }
     }
     
     function playListChange( index ) {
         playListConfig( index );
-        $("#jquery_jplayer_"+playerid).play();
+        element.jPlayer("play");
     }
     
     function playListNext() {
@@ -122,5 +116,3 @@ function cmsplayer_ready (element, playlist, autoplay, playerid)
     displayPlayList();
     playListInit(autoplay);
 }
-
-jQuery.cmsplayer_ready = cmsplayer_ready;

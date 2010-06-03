@@ -28,19 +28,24 @@
 </div> 
 <script type="text/javascript">
 $(document).ready(function(){
-    $("head").append('<scr' + 'ipt type="text/javascript" src="{{ MEDIA_URL }}js/cmsplayer.js"></scr' + 'ipt>');
-	$('#jquery_jplayer_{{ player.id }}').jPlayer(
+    $("head").append('<scr' + 'ipt type="text/javascript" src="{{ MEDIA_URL }}jplayer/js/cmsplayer.js"></scr' + 'ipt>');
+    var player = $('#jquery_jplayer_{{ player.id }}');
+	player.jPlayer(
 	    {
 		    ready:function(){
-		    	.cmsplayer_ready(
-				   $(this), 
+	                cmsplayer_ready(
+	                player, 
 				   {{ player.get_json_playlist }},
 				   {{ player.get_json_autoplay }},
-				   {{ player.id }}
+				   "{{ player.id }}"
 				 );
 			},
-			swfPath: {{ player.get_json_swf_path }},
-			oggSupport: {{ player.get_json_ogg_support }}
+			cssPrefix: 'jqjp_{{ player.id }}',
+			errorAlerts: true,
+			warningAlerts: true,
+			swfPath: 'http://' + window.location.host + {{ player.get_base_path }},
+			oggSupport: {{ player.get_json_ogg_support }},
+			customCssIds: true
 		}
 	);
 });

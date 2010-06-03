@@ -1,7 +1,5 @@
 from django.conf import settings
 from django.db import models
-from django.utils.safestring import mark_safe
-from django.utils.simplejson import dumps
 from django.utils.translation import ugettext_lazy as _
 from jplayer.utils import safe_json
 
@@ -43,8 +41,8 @@ class JPlayer(models.Model):
         return self.ogg_support()
     
     @safe_json
-    def get_json_swf_path(self):
-        return settings.JPLAYER_SWF_PATH
+    def get_base_path(self):
+        return settings.JPLAYER_BASE_PATH
     
     @safe_json
     def get_json_autoplay(self):
