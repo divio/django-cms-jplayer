@@ -34,7 +34,12 @@ def build_player(playerid, playlist, autoplay=True, base_path=settings.JPLAYER_B
         }
     ]
     """
-    oggsupport = _safe_json(all([song.get('ogg', False) for song in playlist]))
+    def _get_ogg(songobj):
+        try:
+            return bool(songobj['ogg'])
+        except (KeyError, TypeError):
+            return hasattr(songobj, 'ogg') and bool(getattr(songobj, 'ogg', False))
+    oggsupport = _safe_json(all([_get_ogg(song) for song in playlist]))
     playlist = _safe_json(playlist)
     autoplay = _safe_json(autoplay)
     base_path = _safe_json(base_path)
