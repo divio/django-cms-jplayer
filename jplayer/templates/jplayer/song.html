@@ -1,0 +1,19 @@
+<li class="song" id="playlist_item_{{ player.id }}_{{ forloop.counter0 }}">
+	<span class="songname">{{ song.title }}</span>
+	&nbsp;-&nbsp;
+	{% if song.artist_name %}
+		{% if song.artist_url %}
+			<a class="artist" href="{{ song.artist_url }}">{{ song.artist_name }}</a>"
+		{% else %}
+			<span class="artist">{{ song.artist_name }}</span>
+		{% endif %}
+	{% endif %}
+	&nbsp;-&nbsp;
+	{% if song.credits_name %}
+		{% if song.credits_url %}
+			<a class="credits" href="{{ song.credits_url }}">{{ song.credits_name }}</a>
+		{% else %}
+			<span class="credits">{{ song.credits_name }}</span>
+		{% endif %}
+	{% endif %}
+</li>

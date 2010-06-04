@@ -16,6 +16,9 @@ class JPlayer(models.Model):
     
     @safe_json
     def get_json_playlist(self):
+        return self.playlist()
+    
+    def playlist(self):
         playlist = []
         ogg_support = self.ogg_support()
         for song in self.songs.all():

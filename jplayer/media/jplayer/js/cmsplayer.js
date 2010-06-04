@@ -39,27 +39,6 @@ function cmsplayer_ready (element, playlist, autoplay, playerid)
     function displayPlayList() {
         for (i=0; i < playlist.length; i++) {
             song = playlist[i];
-            display = "<li class='song' id='playlist_item_"+playerid+"_"+i+"'><span class='songname' id='cmsplay_song_"+i+"'>"+song.title+'</span>';
-            if (song.artist_url)
-            {
-                display+=" - <a class='artist' href='"+song.artist_url+"'>"+song.artist_name+"</a>";
-            }
-            else if (song.artist_name)
-            {
-                display+=" - <span class='artist'>"+song.artist_name+"</span>";
-            }
-            if (song.credits_name)
-            {
-                if (song.credits_url)
-                {
-                    display+=" - <a class='credits' href='"+song.credits_url+"'>"+song.credits_name+"</a>";
-                }
-                else
-                {
-                    display+=" - <span class='credits'>"+song.credits_name+"</span>";
-                }
-            }
-            $("#playlist_list_"+playerid +" ul").append(display);
             $("#playlist_item_"+playerid+"_"+i).data( "index", i ).hover(
                 function() {
                     if (playItem != $(this).data("index")) {

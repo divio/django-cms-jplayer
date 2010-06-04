@@ -24,7 +24,10 @@
  
 <div id="playlist_list_{{ player.id }}" class="cmsplaylist"> 
 	<ul>
-	</ul> 
+	{% for song in player.playlist %}
+		{% include "jplayer/song.html" %}
+	{% endfor %}
+	</ul>
 </div> 
 <script type="text/javascript">
 $(document).ready(function(){
