@@ -110,12 +110,13 @@ function cmsplayer_ready (element, options)
 
 (function($) {
     $.fn.cmsPlayer = function(options) {
+        var das = $(this);
         if (!options){
             var options = {};
         }
         $.extend(options, {
-            ready: cmsplayer_ready(this, options)
-        })
+            ready: function(){cmsplayer_ready(das, options)}
+        });
         var fulloptions = {
             autoplay: true,
             autonext: true
@@ -126,7 +127,7 @@ function cmsplayer_ready (element, options)
             dbg("[CMSPLAYER] ERROR: playerid and playlist *must* be defined!");
             return this;
         }
-        this.jPlayer(fulloptions);
+        $(das).jPlayer(fulloptions);
         return this;
     };
 })(jQuery);
