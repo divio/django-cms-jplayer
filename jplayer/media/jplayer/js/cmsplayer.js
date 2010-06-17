@@ -1,5 +1,11 @@
-function cmsplayer_ready (element, playlist, autoplay, playerid)
+function dbg(msg){window.console && console.log && console.log(msg);}
+
+function cmsplayer_ready (element, options)
 {
+    var playerid = options.playerid;
+    var autoplay = options.autoplay;
+    var autonext = options.autonext;
+    var playlist = options.playlist;
     var playItem = 0;
     var playtime = $("#play_time_"+playerid);
     var totaltime =  $("#total_time_"+playerid);
@@ -23,7 +29,10 @@ function cmsplayer_ready (element, playlist, autoplay, playerid)
         var ttSec = (myTotalTime.getUTCSeconds() < 10) ? "0" + myTotalTime.getUTCSeconds() : myTotalTime.getUTCSeconds();
         totaltime.text(ttMin+":"+ttSec);
     }).jPlayer("onSoundComplete", function() {
-        playListNext();
+        element.trigger('cmsplayer_songcomplete', [playlist[playItem]]);
+        if(autonext){
+            playListNext();
+        }
     });
     
     $("#ctrl_prev_"+playerid).click( function() {
@@ -56,6 +65,7 @@ function cmsplayer_ready (element, playlist, autoplay, playerid)
     }
     
     function playListInit(autoplay) {
+        element.trigger('cmsplayer_init', [playlist[playItem]]);
         if(autoplay) {
             playListChange( playItem );
         } else {
@@ -75,11 +85,13 @@ function cmsplayer_ready (element, playlist, autoplay, playerid)
         {
             element.jPlayer("setFile", playlist[playItem].mp3);
         }
+        element.trigger('cmsplayer_config', [playlist[playItem]]);
     }
     
     function playListChange( index ) {
         playListConfig( index );
         element.jPlayer("play");
+        element.trigger('cmsplayer_change', [playlist[playItem]]);
     }
     
     function playListNext() {
@@ -95,3 +107,28 @@ function cmsplayer_ready (element, playlist, autoplay, playerid)
     displayPlayList();
     playListInit(autoplay);
 }
+
+(function($) {
+    $.fn.cmsPlayer = function(options) {
+        if (!options){
+            var options = {};
+        }
+        $.extend(options, {
+            ready: cmsplayer_ready(this, options)
+        })
+        var fulloptions = {
+            autoplay: true,
+            autonext: true
+        };
+        $.extend(fulloptions, options);
+        if (!fulloptions.playerid || !fulloptions.playlist)
+        {
+            dbg("[CMSPLAYER] ERROR: playerid and playlist *must* be defined!");
+            return this;
+        }
+        this.jPlayer(fulloptions);
+        return this;
+    };
+})(jQuery);
+
+document.cmsPlayerLoaded = true;

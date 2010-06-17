@@ -31,18 +31,16 @@
 </div> 
 <script type="text/javascript">
 $(document).ready(function(){
-    $("head").append('<scr' + 'ipt type="text/javascript" src="{{ MEDIA_URL }}jplayer/js/cmsplayer.js"></scr' + 'ipt>');
+    if (!document.cmsPlayerLoaded){
+    	$("head").append('<scr' + 'ipt type="text/javascript" src="{{ MEDIA_URL }}jplayer/js/cmsplayer.js"></scr' + 'ipt>');
+    }
     var player = $('#jquery_jplayer_{{ player.id }}');
-	player.jPlayer(
-	    {
-		    ready:function(){
-	                cmsplayer_ready(
-	                player, 
-				   {{ player.get_json_playlist }},
-				   {{ player.get_json_autoplay }},
-				   "{{ player.id }}"
-				 );
-			},
+	player.cmsPlayer(
+		{
+		    playlist: {{ player.get_json_playlist }},
+		    autoplay: {{ player.get_json_autoplay }},
+		    playerid: "{{ player.id }}",
+		    autonext: true,
 			cssPrefix: 'jqjp_{{ player.id }}',
 			swfPath: 'http://' + window.location.host + {{ player.get_base_path }},
 			oggSupport: {{ player.get_json_ogg_support }},

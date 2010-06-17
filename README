@@ -1,1 +1,10 @@
-To be written
+##################
+django-cms-jplayer
+##################
+
+============
+Dependencies
+============
+
+* jPlayer
+* django-cms (optional)
