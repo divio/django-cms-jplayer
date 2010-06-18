@@ -14,9 +14,10 @@ class JPlayer(models.Model):
     def __unicode__(self):
         return self.name
     
-    @safe_json
     def get_json_playlist(self):
-        return self.playlist()
+        if not hasattr(self, '_cached_playlist'):
+            self._cached_playlist = safe_json(self.playlist())
+        return self._cached_playlist
     
     def playlist(self):
         playlist = []
@@ -39,17 +40,14 @@ class JPlayer(models.Model):
     def ogg_support(self):
         return not self.songs.filter(ogg_file__exact='').count()
     
-    @safe_json
     def get_json_ogg_support(self):
-        return self.ogg_support()
+        return safe_json(self.ogg_support())
     
-    @safe_json
     def get_base_path(self):
-        return settings.JPLAYER_BASE_PATH
+        return safe_json(settings.JPLAYER_BASE_PATH)
     
-    @safe_json
     def get_json_autoplay(self):
-        return self.autoplay
+        return safe_json(self.autoplay)
 
     
 class Artist(models.Model):

@@ -1,0 +1,83 @@
+{% load i18n %}
+{% block content %}
+	{% block player %}
+	<div class="jplayer" id="jquery_jplayer_{{ player.id }}"></div>
+	{% endblock %}
+	
+	{% block container %}
+	<div id="player_container_{{ player.id }}" class="cmsplayer"> 
+		{% block controls %}
+		<ul id="player_controls_{{ player.id }}" class="controls"> 
+		{% block main_controls %}
+			<li id="player_play_{{ player.id }}" class="play">{% trans "play" %}</li> 
+			<li id="player_pause_{{ player.id }}" class="pause">{% trans "pause" %}</li> 
+			<li id="player_stop_{{ player.id }}" class="stop">{% trans "stop" %}</li>
+		{% endblock %}
+		{% block volume_controls %} 
+			<li id="player_volume_min_{{ player.id }}" class="volume-min">{% trans "min volume" %}</li> 
+			<li id="player_volume_max_{{ player.id }}" class="volume-max">{% trans "max volume" %}</li>
+		{% endblock %}
+		{% block track_controls %} 
+			<li id="ctrl_prev_{{ player.id }}" class="prev">{% trans "previous" %}</li> 
+			<li id="ctrl_next_{{ player.id }}" class="next">{% trans "next" %}</li>
+		{% endblock %} 
+		</ul>
+		{% endblock %} 
+		{% block timer %}
+		<div id="play_time_{{ player.id }}" class="playtime"></div> 
+		<div id="total_time_{{ player.id }}" class="totaltime"></div>
+		{% endblock %}
+		{% block progress_bar %} 
+		<div id="player_progress_{{ player.id }}" class="progress"> 
+			<div id="player_progress_load_bar_{{ player.id }}" class="loadbar"> 
+				<div id="player_progress_play_bar_{{ player.id }}" class="playbar"></div> 
+			</div>
+		</div>
+		{% endblock %}
+		{% block volumebar %}
+		<div id="player_volume_bar_{{ player.id }}" class="volumebar"> 
+			<div id="player_volume_bar_value_{{ player.id }}" class="volumebarvalue"></div> 
+		</div>
+		{% endblock %}
+	</div>
+	{% endblock %}
+	 
+	 {% block playlist %}
+	<div id="playlist_list_{{ player.id }}" class="cmsplaylist"> 
+		<ul>
+		{% for song in player.playlist %}
+			{% block playlist_song %}
+			{% include "jplayer/song.html" %}
+			{% endblock %}
+		{% endfor %}
+		</ul>
+	</div> 
+	{% endblock %}
+	
+	{% block javascript %}
+	<script type="text/javascript">
+	$(document).ready(function(){
+	    {% block javascript_library %}
+	    if (!document.cmsPlayerLoaded){
+	    	$("head").append('<scr' + 'ipt type="text/javascript" src="{{ MEDIA_URL }}jplayer/js/cmsplayer.js"></scr' + 'ipt>');
+	    }
+	    {% endblock %}
+	    var player = $('#jquery_jplayer_{{ player.id }}');
+		player.cmsPlayer(
+			{
+			    {% block javascript_initdata %}
+			    playlist: {{ player.get_json_playlist }},
+			    autoplay: {{ player.get_json_autoplay }},
+			    playerid: "{{ player.id }}",
+			    autonext: true,
+				cssPrefix: 'jqjp_{{ player.id }}',
+				swfPath: 'http://' + window.location.host + {{ player.get_base_path }},
+				oggSupport: {{ player.get_json_ogg_support }},
+				customCssIds: true
+				{% endblock %}
+			}
+		);
+	});
+	</script>
+	{% endblock %}
+{% endblock %}
