@@ -125,7 +125,12 @@
         function replacePlaylist(new_playlist){
             element.data('cmsplayer.playlist', new_playlist);
         }
-        element.data('cmsplayer.replacePlaylist');
+        element.data('cmsplayer.replacePlaylist', replacePlaylist);
+        
+        function getPlayItem(){
+            return playItem;
+        }
+        element.data('cmsplayer.getPlayItem', getPlayItem);
 
         init();
     }
