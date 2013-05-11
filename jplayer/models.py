@@ -44,7 +44,7 @@ class JPlayer(models.Model):
         return safe_json(self.ogg_support())
     
     def get_base_path(self):
-        return safe_json(settings.JPLAYER_BASE_PATH)
+        return safe_json('./jplayer/')
     
     def get_json_autoplay(self):
         return safe_json(self.autoplay)
